@@ -16,14 +16,6 @@ const parser = new ArgsParser({
 		choices: ['list', 'sunrise', 'sunset'],
 	},
 	{
-		name: '--status',
-		description: 'filter results by status',
-		type: 'string',
-		choices: ['', 'on', 'off'],
-		default: '',
-		nargs: '?',
-	},
-	{
 		name: '--maxwait',
 		description: 'max time in ms to wait for all addresses to respond',
 		type: 'number',
@@ -80,8 +72,7 @@ const sunrise3 = (light: LLight) => {
 				0, // saturation
 				100, // brightness
 				3300, // Kelvin
-				// 5 * 60 * 1000, // 5 minutes in ms
-				3000,
+				5 * 60 * 1000, // 5 minutes in ms
 				next,
 			)
 		}
@@ -103,12 +94,12 @@ const sunrise4 = (light: LLight) => {
 emitter.on('discovery-stop', () => {
 	switch (args.positional.command) {
 		case 'list':
-			for (const [_, value] of Object.entries(client.lights(args.options.status))) {
+			for (const [_, value] of Object.entries(client.lights(''))) {
 				console.log(`${(value as LLight).id}: ${(value as LLight).label}`);
 			}
 			break;
 		case 'sunrise':
-			for (const [_, value] of Object.entries(client.lights(args.options.status))) {
+			for (const [_, value] of Object.entries(client.lights(''))) {
 				sunrise1(value as LLight);
 			}
 			break;

@@ -4,7 +4,6 @@
   "description": "Simple LIFX lights automation scripts",
   "main": "src/main.ts",
   "scripts": {
-    "prepare": "tsc -p .",
     "build": "esbuild src/main.ts --bundle --outfile=dist/bundle.js --platform=node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
