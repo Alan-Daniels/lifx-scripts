@@ -38,6 +38,8 @@ const parser = new ArgsParser({
 		nargs: '*',
 	}
 ]);
+parser.addVersionAction('--version', '-v');
+parser.addHelpAction('--help', '-h');
 
 const args = parser.parse(process.argv.slice(2));
 
