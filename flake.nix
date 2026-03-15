@@ -7,42 +7,46 @@
     # systems.url = "github:nix-systems/default";
   };
 
-  outputs =
-    { nixpkgs, ... }:
-    let
-      eachSystem =
-        f:
-        nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed (system: f nixpkgs.legacyPackages.${system});
-    in
-    {
-      devShells = eachSystem (pkgs: {
-        default = pkgs.mkShell {
-          packages = [
-            pkgs.nodejs
+  outputs = {nixpkgs, ...}: let
+    eachSystem = f:
+      nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed (system: f nixpkgs.legacyPackages.${system});
+  in {
+    devShells = eachSystem (pkgs: {
+      default = pkgs.mkShell {
+        packages = [
+          pkgs.nodejs
 
-            # Alternatively, you can use a specific major version of Node.js
+          # Alternatively, you can use a specific major version of Node.js
 
-            # pkgs.nodejs-22_x
+          # pkgs.nodejs-22_x
 
-            # Use corepack to install npm/pnpm/yarn as specified in package.json
-            pkgs.corepack
+          # Use corepack to install npm/pnpm/yarn as specified in package.json
+          pkgs.corepack
 
-            # To install a specific alternative package manager directly,
-            # comment out one of these to use an alternative package manager.
+          # To install a specific alternative package manager directly,
+          # comment out one of these to use an alternative package manager.
 
-            # pkgs.yarn
-            # pkgs.pnpm
-            # pkgs.bun
+          # pkgs.yarn
+          # pkgs.pnpm
+          # pkgs.bun
 
-            # Required to enable the language server
-            pkgs.nodePackages.typescript
-            pkgs.nodePackages.typescript-language-server
+          # Required to enable the language server
+          pkgs.nodePackages.typescript
+          pkgs.nodePackages.typescript-language-server
 
-            # Python is required on NixOS if the dependencies require node-gyp
+          # Python is required on NixOS if the dependencies require node-gyp
 
-            # pkgs.python3
-          ];
-        };
-      });
-    };
+          # pkgs.python3
+        ];
+      };
+    });
+    packages = eachSystem (pkgs: {
+      default = pkgs.buildNpmPackage {
+        pname = "lifx-scripts";
+        version = "0.0.1";
+        src = ./.;
+        npmDepsHash = "sha256-QF1nGMipxVIctuJ6ayTXllJfuGPgZ3GMvcOQyjTpZOo=";
+      };
+    });
+  };
 }

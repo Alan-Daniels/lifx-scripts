@@ -1,3 +1,4 @@
 node_modules
 .direnv
 src/*.js
+dist/bundle.js
