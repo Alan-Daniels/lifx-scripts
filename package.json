@@ -1,0 +1,22 @@
+{
+  "name": "lifx-scripts",
+  "version": "0.0.1",
+  "description": "Simple LIFX lights automation scripts",
+  "main": "src/main.ts",
+  "scripts": {
+    "prepare": "tsc -p .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alan",
+  "license": "MIT",
+  "dependencies": {
+    "eventemitter3": "^5.0.1",
+    "argparse-ts": "^0.9.0",
+    "lifx-lan-client": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
