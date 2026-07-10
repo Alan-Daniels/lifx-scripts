@@ -72,7 +72,7 @@ const sunrise3 = (light: LLight) => {
 				0, // saturation
 				100, // brightness
 				3300, // Kelvin
-				5 * 60 * 1000, // 5 minutes in ms
+				60 * 60 * 1000, // 1 hour in ms
 				next,
 			)
 		}
